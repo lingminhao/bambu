@@ -1,2 +1,0 @@
-# bambu
-bambu for singlecell
