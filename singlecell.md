@@ -4,7 +4,7 @@ Bambu is one of the existing bulk isoform discovery and quantification tools whe
 
 ## **Data** 
 
-To use Bambu at the single-cell level, you will need the 
+To use Bambu at the single-cell level, you will need:
 
 - **reads** the read file *(.fastq.gz) from a single-cell experiment run
 - **genome** the genome file (.fasta)
@@ -53,13 +53,19 @@ q()
 Finally, we can run bambu again for transcript quantification: 
 
 ``` bash
-### Transcript Quantification for each cell
+R
+
+library(devtools)
+load_all("bambu")
+
+annotations <- readRDS("extended_annotations.rds")
+genome <- "data/Homo_sapiens.GRCh38.dna.primary_assembly.fa"
 
 cellBarcodeDirName <- paste(system.file("extdata", package = "bambu"), "CB", sep = "/")
 readGrgListFile <- paste0(cellBarcodeDirName, "/", list.files(cellBarcodeDirName))
 rcOutDir <- paste(system.file("extdata", package = "bambu"), "CBReadClass", sep = "/")
 
-annotations <- readRDS("extended_annotations.rds")
+### Transcript Quantification for each cell
 
 se <- bambu(reads = reads, annotations = annotations, genome = genome, ncore = 4, discovery = FALSE, rcOutDir = rcOutDir, 
             readGrgListFile = readGrgListFile)
