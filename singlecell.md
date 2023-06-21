@@ -33,6 +33,8 @@ minimap2 -d ref.mmi data/genome
 After preparing the bam file, we can run bambu for transcript discovery & quantification. 
 
 ``` bash
+R
+
 library(devtools)
 load_all("bambu")
 
@@ -57,6 +59,8 @@ se <- bambu(reads = reads, annotations = annotations, genome = genome, ncore = 4
             readGrgListFile = readGrgListFile)
 
 writeBambuOutput(se, path = "output")
+
+q()
 ```
 The files in the `output` folder is described below:
 
