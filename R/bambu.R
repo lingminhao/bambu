@@ -146,12 +146,6 @@ bambu <- function(reads, annotations = NULL, genome = NULL, NDR = NULL,
   
   if(demultiplexed == TRUE) {trackReads = TRUE}
   if(!is.null(readGrgListFile)){rcOutDir = paste(system.file("extdata", package = "bambu"), "CBReadClass", sep = "/")}
-  
-  if (!dir.exists(rcOutDir)){
-    dir.create(rcOutDir)
-  } else{
-    unlink(paste(rcOutDir, "*", sep = "/"))
-  }
   ### add ### 
   
   if(is.null(annotations)) { annotations = GRangesList()
