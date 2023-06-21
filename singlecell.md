@@ -1,39 +1,37 @@
-# **Transcript discovery and quantification of SG-NEx samples**
+# **Bambu for Single Cell Isoform Analysis**
 
-In this tutorial, we will perform novel transcript discovery and
-quantification on the SG-NEx samples. We will be using six Nanopore direct RNA-Sequencing
-samples, three replicates each from the A549 and
-HepG2 cell lines. The A549 cell line was extracted from lung tissues
-from a patient with lung cancer whereas HepG2 was extracted from
-hepatocellular carcinoma from a patient with liver cancer. We will use
-Bambu, a R package hosted on the Bioconductor platform to identify and
-quantify novel isoforms in these cell lines. 
+Bambu is one of the existing bulk isoform discovery and quantification tools where a single parameter is used across samples for isoform discovery, and Bambu provides quantification that further distinguishes between full-length and non-full-length transcripts. In this work, we extend Bambu to the single-cell level, running at 12 cores whenever possible. 
 
-**Note: This tutorial may take 10 minutes to complete.**
+## **Data** 
 
-## **Content**
+To use Bambu at the single-cell level, you will need the 
 
-- [Installation](#installation)
-- [Data Access and Preparation](#data-access-and-preparation) 
-- [Running Bambu](#running-bambu)
-- [Reference](#reference)
+- **reads** the read file *(.fastq.gz) from a single-cell experiment run
+- **genome** the genome file (.fasta)
+- **annotations** the existing annotation file (.gtf) for the genome
 
-## **Installation**
+## **Usage**
 
-First, we have to install Bambu. Before that, make sure you have R
-(version \>= 4.1) installed on your machine. We can install Bambu using the following command:
+There are two preparatory steps before you run Bambu.
+
+First, we use flexiplex for barcode discovery & demultiplexing. You may learn how to install flexiplex [here](https://davidsongroup.github.io/flexiplex/). Then you can run the following bash script: 
 
 ``` bash
-R
-
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-
-BiocManager::install("bambu")
-
-q()
+cd flexiplex
+gunzip -c ../data/GIS_cellMix_HCT116-A549-HepG2-MCF7_3primeSingleCellcDNA_Rep1_Run1.fastq.gz | ./flexiplex -p 12 -f 0
+head -n 850 flexiplex_barcodes_counts.txt > my_barcode_list.txt
+sort <(gunzip -c 3M-february-2018.txt.gz) <(cut -f1 my_barcode_list.txt) | uniq -d > my_filtered_barcode_list.txt
+gunzip -c ../data/GIS_cellMix_HCT116-A549-HepG2-MCF7_3primeSingleCellcDNA_Rep1_Run1.fastq.gz | ./flexiplex -p 12 -k my_filtered_barcode_list.txt | gzip > ../data/new_GIS_cellMix_HCT116-A549-HepG2-MCF7_3primeSingleCellcDNA_Rep1_Run1.fastq.gz
+cd ..
 ```
-If you want a more recent version of Bambu, you may refer to the Bambu Github repository [here](https://github.com/GoekeLab/bambu). 
+Next, we map the demultiplexed read file to the genome using minimap 2. You may learn how to install minimap2 [here](https://github.com/lh3/minimap2). 
+
+``` bash
+minimap2 -d ref.mmi data/genome
+```
+
+
+
 
 ## **Data Access and Preparation**
 ### **Download Data for Bambu**
