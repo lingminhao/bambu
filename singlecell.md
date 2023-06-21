@@ -42,7 +42,8 @@ genome <- "data/Homo_sapiens.GRCh38.dna.primary_assembly.fa"
 annotations <- prepareAnnotations(annotations)
 
 # Transcript discovery and generate readGrgList for each cell
-bambu(reads = reads, annotations = annotations, genome = genome, quant = FALSE, demultiplexed = TRUE,NDR = 1,  yieldSize = 1000000)
+bambu(reads = reads, annotations = annotations, genome = genome, quant = FALSE, demultiplexed = TRUE,NDR = 1,  
+      yieldSize = 1000000)
 
 ### Transcript Quantification for each cell
 
@@ -52,7 +53,8 @@ rcOutDir <- paste(system.file("extdata", package = "bambu"), "CBReadClass", sep 
 
 annotations <- readRDS("extended_annotations.rds")
 
-se <- bambu(reads = reads, annotations = annotations, genome = genome, ncore = 4, discovery = FALSE, rcOutDir = rcOutDir, readGrgListFile = readGrgListFile)
+se <- bambu(reads = reads, annotations = annotations, genome = genome, ncore = 4, discovery = FALSE, rcOutDir = rcOutDir, 
+            readGrgListFile = readGrgListFile)
 
 writeBambuOutput(se, path = "output")
 ```
