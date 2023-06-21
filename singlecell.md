@@ -30,7 +30,7 @@ Next, we map the demultiplexed read file to the genome using minimap 2. You may 
 minimap2 -d ref.mmi data/genome
 # TO DO 
 ```
-After preparing the bam file, we can run bambu for transcript discovery & quantification. 
+After preparing the bam file, we can run bambu for transcript discovery and generate `readGrgList` file for each cell:  
 
 ``` bash
 R
@@ -47,6 +47,12 @@ annotations <- prepareAnnotations(annotations)
 bambu(reads = reads, annotations = annotations, genome = genome, quant = FALSE, demultiplexed = TRUE,NDR = 1,  
       yieldSize = 1000000)
 
+q()
+```
+
+Finally, we can run bambu again for transcript quantification: 
+
+``` bash
 ### Transcript Quantification for each cell
 
 cellBarcodeDirName <- paste(system.file("extdata", package = "bambu"), "CB", sep = "/")
