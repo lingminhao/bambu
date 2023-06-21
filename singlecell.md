@@ -56,6 +56,15 @@ se <- bambu(reads = reads, annotations = annotations, genome = genome, ncore = 4
 
 writeBambuOutput(se, path = "output")
 ```
+The files in the `output` folder is described below:
 
-
-
+| Output file name                | Description                                                             |
+|:----------------------------|:------------------------------------------|
+| extended_annotations.gtf        | Extended transcript & gene annotations for the genome using long reads data.        |
+| counts_transcript.txt           | Total read counts estimates for each transcript in each sample (sparse matrix format).        |
+| CPM_transcript.txt              | Counts per million (CPM) estimates for each transcript in each sample (sparse matrix format). |
+| fullLengthCounts_transcript.txt | Full length read counts estimates for each transcript in each sample (sparse matrix format).  |
+| uniqueCounts_transcript.txt                | Unique read counts estimates for each transcript in each sample (sparse matrix format).       |
+| txNameToGeneIDMap.txt                 | Gene ID associated to each transcript arranged as in the transcript count estimates          |
+| counts_gene.txt                 | Gene read counts estimates for each transcript in each sample.         |
+| GeneIDMap.txt                 | Gene ID arranged as in the gene count estimates          |
