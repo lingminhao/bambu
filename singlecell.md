@@ -50,7 +50,7 @@ bambu(reads = reads, annotations = annotations, genome = genome, quant = FALSE, 
 q()
 ```
 
-Finally, we can run bambu again for transcript quantification: 
+Finally, we can run bambu again for transcript quantification using the extended transcript annotations from the previous run on each cell: 
 
 ``` bash
 R
