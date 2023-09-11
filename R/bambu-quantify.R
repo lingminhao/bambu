@@ -4,7 +4,8 @@
 #' @noRd
 bambu.quantify <- function(readClass, annotations, emParameters, 
                            trackReads = FALSE, returnDistTable = FALSE,
-                           verbose = FALSE, isoreParameters = setIsoreParameters(NULL)) {
+                           verbose = FALSE, readGrgListFile = NULL, 
+                           isoreParameters = setIsoreParameters(NULL)) {
   min.exonDistance = isoreParameters[["min.exonDistance"]]
   min.primarySecondaryDist =
     isoreParameters[['min.primarySecondaryDist']] 

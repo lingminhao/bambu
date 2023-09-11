@@ -144,8 +144,7 @@ bambu <- function(reads, annotations = NULL, genome = NULL, NDR = NULL,
   ### add ###
   library(Matrix)
   
-  if(demultiplexed == TRUE) {trackReads = TRUE}
-  if(!is.null(readGrgListFile)){rcOutDir = paste(system.file("extdata", package = "bambu"), "CBReadClass", sep = "/")}
+  if(demultiplexed == TRUE) {trackReads = TRUE; lowMemory = TRUE}
   ### add ### 
   
   if(is.null(annotations)) { annotations = GRangesList()
@@ -196,10 +195,6 @@ bambu <- function(reads, annotations = NULL, genome = NULL, NDR = NULL,
                                            isoreParameters, stranded, bpParameters, fusionMode, verbose)
     metadata(annotations)$warnings = warnings
     
-    ### add ###
-    if (demultiplexed == TRUE){saveRDS(annotations, "extended_annotations.rds")}
-    ### add ### 
-    
     if (!quant) return(annotations)
   }
   
@@ -220,6 +215,7 @@ bambu <- function(reads, annotations = NULL, genome = NULL, NDR = NULL,
                                      annotations = annotations, isoreParameters = isoreParameters,
                                      emParameters = emParameters, trackReads = trackReads, 
                                      returnDistTable = returnDistTable, verbose = verbose, 
+                                     readGrgListFile = readGrgListFile, 
                                      BPPARAM = bpParameters)
       
       ### countsData
@@ -262,6 +258,7 @@ bambu <- function(reads, annotations = NULL, genome = NULL, NDR = NULL,
                            annotations = annotations, isoreParameters = isoreParameters,
                            emParameters = emParameters, trackReads = trackReads, 
                            returnDistTable = returnDistTable, verbose = verbose, 
+                           readGrgListFile = readGrgListFile, 
                            BPPARAM = bpParameters)
       
       countsSe <- combineCountSes(countsSe, trackReads, returnDistTable)

@@ -41,10 +41,10 @@ prepareDataFromBam <- function(bamFile, yieldSize = NULL, verbose = FALSE, use.n
           mcols(readGrgList[[counter]])$UMI <- substr(names(readGrgList[[counter]]), 18, 29)
           names(readGrgList[[counter]]) <- NULL 
           cells <- unique(c(cells, mcols(readGrgList[[counter]])$CB))
-          mcols(readGrgList[[counter]])$CB <- as.integer(factor(mcols(readGrgList[[counter]])$CB, levels = cells))
+          mcols(readGrgList[[counter]])$CB_index <- as.integer(factor(mcols(readGrgList[[counter]])$CB, levels = cells))
           
-          #umi <- unique(c(umi, mcols(readGrgList[[counter]])$UMI))
-          #mcols(readGrgList[[counter]])$UMI <- as.integer(factor(mcols(readGrgList[[counter]])$UMI, levels = umi))
+          umi <- unique(c(umi, mcols(readGrgList[[counter]])$UMI))
+          mcols(readGrgList[[counter]])$UMI <- as.integer(factor(mcols(readGrgList[[counter]])$UMI, levels = umi))
         }
         ### add ### 
         

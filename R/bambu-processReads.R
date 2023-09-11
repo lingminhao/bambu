@@ -129,16 +129,15 @@ bambu.processReadsByFile <- function(bam.file, genomeSequence, annotations,
       ## add ###
       if (isTRUE(demultiplexed)){
         cellBarcodeAssign <- tibble(index = mcols(readGrgList)$id, CB = mcols(readGrgList)$CB) %>% nest(.by = "CB")
-        cellBarcodeDirName <- paste(system.file("extdata", package = "bambu"), "CB", sep = "/")
-        
-        if (!dir.exists(cellBarcodeDirName)){
-          dir.create(cellBarcodeDirName)
-        } else{
-          unlink(paste(cellBarcodeDirName, "*", sep = "/"))
-        }
 
+        if (!dir.exists("CB")){
+          dir.create("CB")
+        } else{
+          unlink(paste("CB", "*", sep = "/"))
+        }
+        
         invisible(lapply(seq(nrow(cellBarcodeAssign)),
-                  function(x){saveRDS(readGrgList[pull(cellBarcodeAssign$data[[x]])], paste0(cellBarcodeDirName, "/", x,".rds"))}))
+                  function(x){saveRDS(readGrgList[pull(cellBarcodeAssign$data[[x]])], paste0("CB/", x,".rds"))}))
       }
       ## add ###
       

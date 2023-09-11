@@ -35,9 +35,20 @@ writeBambuOutput <- function(se, path, prefix = "") {
             writeCountsOutput(se, varname=d,
                              feature='transcript',outdir, prefix)
         }
-        # seGene <- transcriptToGeneExpression(se, readGrgListFile)
-        # writeCountsOutput(seGene, varname='counts',
-        #                      feature='gene',outdir, prefix)
+        
+        seGene <- transcriptToGeneExpression(se[,1])
+        
+        for (i in seq(ceiling(length(colnames(se)) / 100))){
+          if (i == ceiling(length(colnames(se)) / 100)){
+              seGene <- cbind(seGene, transcriptToGeneExpression(se[,(100*i-99):length(colnames(se))]))
+          } else{
+              seGene <- cbind(seGene, transcriptToGeneExpression(se[,(100*i-99):(100*i)]))
+          }
+        }
+        
+        seGene <- seGene[,-1]
+        
+        writeCountsOutput(seGene, varname='counts', feature='gene',outdir, prefix)
     }
 }
 
@@ -66,8 +77,12 @@ writeCountsOutput <- function(se, varname = "counts",
         if (feature == "transcript"){
           Matrix::writeMM(estimates, estimatesfn)
           geneIDs <- data.table(as.data.frame(rowData(se))[,c("TXNAME","GENEID")])
-          utils::write.table(geneIDs, file = paste0(outdir, "txToGeneMap.txt"), 
-                             sep = "\t", quote = FALSE, row.names = FALSE)
+          utils::write.table(geneIDs, file = paste0(outdir, "txANDgenes.txt"), 
+                             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+        } else{
+          Matrix::writeMM(estimates, estimatesfn)
+          utils::write.table(names(se), file = paste0(outdir, "genes.txt"), 
+                             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
         }
     }
 }
