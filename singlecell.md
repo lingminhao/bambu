@@ -44,7 +44,7 @@ genome <- "data/Homo_sapiens.GRCh38.dna.primary_assembly.fa"
 annotations <- prepareAnnotations(annotations)
 
 # Transcript discovery and generate readGrgList for each cell
-bambu(reads = reads, annotations = annotations, genome = genome, quant = FALSE, demultiplexed = TRUE,NDR = 1,  
+bambu(reads = reads, annotations = annotations, genome = genome, quant = FALSE, lowMemory = TRUE, demultiplexed = TRUE,NDR = 1,  
       yieldSize = 1000000)
 
 q()
