@@ -79,6 +79,8 @@ writeCountsOutput <- function(se, varname = "counts",
           geneIDs <- data.table(as.data.frame(rowData(se))[,c("TXNAME","GENEID")])
           utils::write.table(geneIDs, file = paste0(outdir, "txANDgenes.txt"), 
                              sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+          utils::write.table(colnames(se), file = paste0(outdir, "barcodes.txt"), quote = FALSE, row.names = FALSE, col.names = FALSE)
+          
         } else{
           Matrix::writeMM(estimates, estimatesfn)
           utils::write.table(names(se), file = paste0(outdir, "genes.txt"), 

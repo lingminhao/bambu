@@ -137,7 +137,7 @@ bambu.processReadsByFile <- function(bam.file, genomeSequence, annotations,
         }
         
         invisible(lapply(seq(nrow(cellBarcodeAssign)),
-                  function(x){saveRDS(readGrgList[pull(cellBarcodeAssign$data[[x]])], paste0("CB/", x,".rds"))}))
+                  function(x){saveRDS(readGrgList[pull(cellBarcodeAssign$data[[x]])], paste0("CB/", cellBarcodeAssign$CB[[x]],".rds"))}))
       }
       ## add ###
       
